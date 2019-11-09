@@ -1,0 +1,20 @@
+{
+    "1": {
+        "discount": [],
+        "date_emission": "01-03-2018",
+        "date_use": "",
+        "used": false
+    },
+    "2": {
+        "items": [],
+        "date_emission": "02-03-2018",
+        "date_use": "",
+        "used": false
+    },
+    "3": {
+        "items": [],
+        "date_emission": "03-03-2018",
+        "date_use": "",
+        "used": false
+    }
+}

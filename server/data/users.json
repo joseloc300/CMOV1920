@@ -1,0 +1,35 @@
+{
+    "email1": {
+        "public_key": "???",
+        "hashed_pw": "!!!!!",
+        "fname": "Ben",
+        "lname": "Howard",
+        "birthdate": "23-12-1998",
+        "address": "street 1",
+        "transaction_ids": [],
+        "voucher_ids": [],
+        "total_spent": 0
+    },
+    "email2": {
+        "public_key": "???",
+        "hashed_pw": "!!!!!",
+        "fname": "Kent",
+        "lname": "Brockman",
+        "birthdate": "23-12-1998",
+        "address": "street 2",
+        "transaction_ids": [],
+        "voucher_ids": [],
+        "total_spent": 0
+    },
+    "email3": {
+        "public_key": "???",
+        "hashed_pw": "!!!!!",
+        "fname": "Bunny",
+        "lname": "Easter",
+        "birthdate": "23-12-1998",
+        "address": "street 3",
+        "transaction_ids": [],
+        "voucher_ids": [],
+        "total_spent": 0
+    }
+}

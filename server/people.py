@@ -1,26 +1,8 @@
 from datetime import datetime
+import json
 
 def get_timestamp():
     return datetime.now().strftime(("%Y-%m-%d %H:%M:%S"))
-
-# Data to serve with our API
-PEOPLE = {
-    "Farrell": {
-        "fname": "Doug",
-        "lname": "Farrell",
-        "timestamp": get_timestamp()
-    },
-    "Brockman": {
-        "fname": "Kent",
-        "lname": "Brockman",
-        "timestamp": get_timestamp()
-    },
-    "Easter": {
-        "fname": "Bunny",
-        "lname": "Easter",
-        "timestamp": get_timestamp()
-    }
-}
 
 # Create a handler for our read (GET) people
 def read():
@@ -31,4 +13,21 @@ def read():
     :return:        sorted list of people
     """
     # Create the list of people from our data
-    return [PEOPLE[key] for key in sorted(PEOPLE.keys())]
+    with open('data/users.json') as json_file:
+        users = json.load(json_file)
+        for u in users:
+            print(u)
+            print('public_key: ' + users[u]['public_key'])
+            print('birthdate: ' + users[u]['birthdate'])
+            print('transaction_ids: ' + str(users[u]['transaction_ids']))
+            print('')
+        return users
+
+    #return [PEOPLE[key] for key in sorted(PEOPLE.keys())]
+    
+
+def register():
+    pass
+
+def login():
+    pass
