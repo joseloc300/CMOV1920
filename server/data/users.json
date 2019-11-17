@@ -1,33 +1,30 @@
 {
-    "email1": {
+    "username1": {
         "public_key": "???",
-        "hashed_pw": "!!!!!",
-        "fname": "Ben",
-        "lname": "Howard",
-        "birthdate": "23-12-1998",
-        "address": "street 1",
+        "fullname": "Ben H.",
+        "card_number": 1232432432,
+        "card_exp_date": "12/20",
+        "card_verify": "3VB",
         "transaction_ids": [],
         "voucher_ids": [],
         "total_spent": 0
     },
-    "email2": {
+    "username2": {
         "public_key": "???",
-        "hashed_pw": "!!!!!",
-        "fname": "Kent",
-        "lname": "Brockman",
-        "birthdate": "23-12-1998",
-        "address": "street 2",
+        "fullname": "Ben H.",
+        "card_number": 1232432432,
+        "card_exp_date": "12/20",
+        "card_verify": "3VB",
         "transaction_ids": [],
         "voucher_ids": [],
         "total_spent": 0
     },
-    "email3": {
+    "username3": {
         "public_key": "???",
-        "hashed_pw": "!!!!!",
-        "fname": "Bunny",
-        "lname": "Easter",
-        "birthdate": "23-12-1998",
-        "address": "street 3",
+        "fullname": "Ben H.",
+        "card_number": 1232432432,
+        "card_exp_date": "12/20",
+        "card_verify": "3VB",
         "transaction_ids": [],
         "voucher_ids": [],
         "total_spent": 0
