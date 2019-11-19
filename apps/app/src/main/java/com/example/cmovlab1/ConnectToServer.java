@@ -2,6 +2,7 @@ package com.example.cmovlab1;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -19,10 +20,10 @@ public class ConnectToServer extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setTitle("Connect to Server");
         setContentView(R.layout.activity_connect_to_server);
-        bindButtons();
+        bindHandlers();
     }
 
-    private void bindButtons() {
+    private void bindHandlers() {
         confirmButtonHandler();
     }
 
@@ -61,6 +62,7 @@ public class ConnectToServer extends AppCompatActivity {
                     }
                     else {
                         Toast.makeText(getApplicationContext(),"Connected to the server sucessfully.",Toast.LENGTH_SHORT).show();
+                        callNextActivity();
                     }
                 }
             }
@@ -70,6 +72,21 @@ public class ConnectToServer extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"Could not connect to the server.",Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void callNextActivity() {
+        //check if its 1st use of the app
+        SharedPreferences keys = getSharedPreferences("keys", MODE_PRIVATE);
+        if(!keys.contains("user_uuid")) {
+            Intent register = new Intent(this, Register.class);
+            //register.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(register);
+        }
+        else {
+            Intent login = new Intent(this, Login.class);
+            startActivity(login);
+        }
+
     }
 }
 
