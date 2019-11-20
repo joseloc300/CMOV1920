@@ -8,9 +8,9 @@
 
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="25dp"
         android:layout_marginBottom="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -35,7 +35,7 @@
                     app:srcCompat="@drawable/ic_shopping_cart_black_120dp" />
 
                 <Button
-                    android:id="@+id/button2"
+                    android:id="@+id/btn_cart"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Shopping Cart" />
@@ -54,7 +54,7 @@
                     app:srcCompat="@drawable/ic_loyalty_black_120dp" />
 
                 <Button
-                    android:id="@+id/button3"
+                    android:id="@+id/btn_coupons"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Coupons" />
@@ -78,7 +78,7 @@
                     app:srcCompat="@drawable/ic_receipt_black_120dp" />
 
                 <Button
-                    android:id="@+id/button4"
+                    android:id="@+id/btn_transactions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Button"
@@ -92,49 +92,17 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/imageView4"
+                    android:id="@+id/imageView5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_person_black_120dp" />
+                    app:srcCompat="@drawable/ic_credit_card_black_120dp" />
 
                 <Button
-                    android:id="@+id/button5"
+                    android:id="@+id/btn_checkout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Edit Profile" />
+                    android:text="Checkout" />
             </LinearLayout>
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="right">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/imageView5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/ic_credit_card_black_120dp" />
-
-                    <Button
-                        android:id="@+id/button6"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Checkout" />
-                </LinearLayout>
-            </RelativeLayout>
-
         </TableRow>
 
     </TableLayout>

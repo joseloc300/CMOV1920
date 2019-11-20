@@ -2,6 +2,8 @@ package com.example.cmovlab1;
 
 import com.loopj.android.http.*;
 
+import cz.msebera.android.httpclient.entity.mime.Header;
+
 public class ServerRestClient {
     private static AsyncHttpClient client = new AsyncHttpClient();
 
@@ -11,7 +13,7 @@ public class ServerRestClient {
     }
 
     public static void post(String base_url, String endpoint, RequestParams params, AsyncHttpResponseHandler responseHandler) {
-        client.post(getAbsoluteUrl(base_url, endpoint), params, responseHandler);
+        client.post(getAbsoluteUrl(base_url, endpoint), params,responseHandler);
     }
 
     private static String getAbsoluteUrl(String base_url, String endpoint) {

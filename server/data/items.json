@@ -1,0 +1,32 @@
+{
+    "1": {
+        "name": "kg cebola",
+        "euros": 2,
+        "cents": 50
+    },
+    "2": {
+        "name": "kg batata",
+        "euros": 1,
+        "cents": 11
+    },
+    "3": {
+        "name": "kg cenoura",
+        "euros": 7,
+        "cents": 85
+    },
+    "4": {
+        "name": "kg banana",
+        "euros": 6,
+        "cents": 32
+    },
+    "5": {
+        "name": "kg kiwi",
+        "euros": 0,
+        "cents": 43
+    },
+    "6": {
+        "name": "500mg esparguete",
+        "euros": 10,
+        "cents": 32
+    }
+}

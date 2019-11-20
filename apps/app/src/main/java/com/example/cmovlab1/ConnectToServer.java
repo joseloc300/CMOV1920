@@ -54,7 +54,7 @@ public class ConnectToServer extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 if(statusCode == 200) {
-                    SharedPreferences.Editor editor = getSharedPreferences("ACME", MODE_PRIVATE).edit();
+                    SharedPreferences.Editor editor = getSharedPreferences("server", MODE_PRIVATE).edit();
                     editor.putString("server_ip", ip);
                     Boolean success = editor.commit();
                     if(!success) {
@@ -79,7 +79,6 @@ public class ConnectToServer extends AppCompatActivity {
         SharedPreferences keys = getSharedPreferences("keys", MODE_PRIVATE);
         if(!keys.contains("user_uuid")) {
             Intent register = new Intent(this, Register.class);
-            //register.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(register);
         }
         else {

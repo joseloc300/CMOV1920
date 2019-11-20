@@ -1,52 +1,71 @@
 from flask import Flask, request
 from flask_restful import Resource, Api
 from sqlalchemy import create_engine
-from json import dumps
 from flask import jsonify, abort
 import uuid
+import json
+from Crypto.PublicKey import RSA
 
 app = Flask(__name__)        
 
 @app.route('/users/register', methods=['POST'])
-def create_task():
-    if not request.json or not 'title' in request.json:
-        abort(400)
-    
+def create_task():    
     new_user = {
-        "public_key": request.json['public_key'],
-        "fullname": request.json['fullname'],
-        "card_number": request.json['card_number'],
-        "card_exp_date": request.json['card_exp_date'],
-        "card_verify": request.json['card_verify'],
+        "public_key": request.form['public_key'],
+        "username": request.form['username'],
+        "fullname": request.form['fullname'],
+        "card_number": request.form['card_number'],
+        "card_expiration": request.form['card_expiration'],
+        "card_cv2": request.form['card_cv2'],
         "transaction_ids": [],
         "voucher_ids": [],
-        "total_spent": 0
+        "acumulated_discount": 0
     }
 
-    
-
     new_uuid = uuid.uuid4()
-    user_uuid = new_uuid.bytes()
+    user_uuid = str(new_uuid.bytes)
 
-    return user_uuid, 201
+    data = {}
+    with open('data/users.json') as json_file:
+        data = json.load(json_file)
+        data[user_uuid] = new_user
+
+    with open('data/users.json', 'w') as json_file:
+            json.dump(data, json_file)
+
+    public_key = ""
+    with open('keys.json') as json_file:
+        data = json.load(json_file)
+        public_key = data['public']
+
+    return {"user_uuid": user_uuid, "server_public_key": public_key}, 201
 
 @app.route('/isalive', methods=['GET'])
 def isalive():
     return {}, 200
 
-@app.route('/todo/api/v1.0/tasks3', methods=['GET'])
-def create_task3():
-    # if not request.json or not 'title' in request.json:
-    #     abort(400)
-    # task = {
-    #     'id': tasks[-1]['id'] + 1,
-    #     'title': request.json['title'],
-    #     'description': request.json.get('description', ""),
-    #     'done': False
-    # }
-    # tasks.append(task)
-    # return jsonify({'task': task}), 201
-    return "vuncionou3"
+
+def check_keys():
+    write = False
+    with open('keys.json') as json_file:
+        data = json.load(json_file)
+        if data['public'] == "":
+            write = True
+        
+    if write == True:
+        data = {}
+        with open('keys.json', 'w') as json_file:
+            key = RSA.generate(2048)
+            data['public'] = str(key.publickey().export_key())
+            data['private'] = str(key.export_key())
+            json.dump(data, json_file)
+
+
+
+check_keys()
 
 if __name__ == '__main__':
      app.run(host= '0.0.0.0',port='5000')
+
+
+

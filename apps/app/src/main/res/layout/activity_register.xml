@@ -86,7 +86,7 @@
                 android:text="Full Name:" />
 
             <EditText
-                android:id="@+id/editText"
+                android:id="@+id/et_fullname"
                 android:layout_width="0px"
                 android:layout_height="wrap_content"
                 android:layout_weight="75"
@@ -99,14 +99,14 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/tv_cardnumber"
                 android:layout_width="0px"
                 android:layout_height="wrap_content"
                 android:layout_weight="25"
                 android:text="Card Number:" />
 
             <EditText
-                android:id="@+id/editText2"
+                android:id="@+id/et_cardnumber"
                 android:layout_width="0px"
                 android:layout_height="wrap_content"
                 android:layout_weight="75"
@@ -118,35 +118,47 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/textView3"
+            <LinearLayout
                 android:layout_width="0px"
-                android:layout_height="wrap_content"
-                android:layout_weight="25"
-                android:text="TextView" />
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/editText3"
-                android:layout_width="0px"
-                android:layout_height="wrap_content"
-                android:layout_weight="25"
-                android:ems="15"
-                android:inputType="number" />
+                <TextView
+                    android:id="@+id/tv_expdate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Expiration Date:" />
 
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="0px"
-                android:layout_height="wrap_content"
-                android:layout_weight="25"
-                android:text="TextView" />
+                <EditText
+                    android:id="@+id/et_expdate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="15"
+                    android:inputType="number" />
+            </LinearLayout>
 
-            <EditText
-                android:id="@+id/editText4"
+            <LinearLayout
                 android:layout_width="0px"
-                android:layout_height="wrap_content"
-                android:layout_weight="25"
-                android:ems="15"
-                android:inputType="number" />
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_cv2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="CV2:" />
+
+                <EditText
+                    android:id="@+id/et_cv2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="20"
+                    android:ems="15"
+                    android:inputType="textCapCharacters"
+                    android:maxLength="3" />
+            </LinearLayout>
 
         </TableRow>
 
@@ -162,7 +174,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tableLayout">
 
         <Button
-            android:id="@+id/bt_register"
+            android:id="@+id/btn_register"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/register"
