@@ -1,4 +1,4 @@
-package com.example.cmovlab1;
+package com.example.terminal;
 
 import com.loopj.android.http.*;
 

@@ -5,11 +5,13 @@ from flask import jsonify, abort
 import uuid
 import json
 from Crypto.PublicKey import RSA
+from Crypto.Random import get_random_bytes
+from Crypto.Cipher import AES, PKCS1_OAEP
 
 app = Flask(__name__)        
 
 @app.route('/users/register', methods=['POST'])
-def create_task():    
+def register_user():    
     new_user = {
         "public_key": request.form['public_key'],
         "username": request.form['username'],
@@ -19,11 +21,12 @@ def create_task():
         "card_cv2": request.form['card_cv2'],
         "transaction_ids": [],
         "voucher_ids": [],
+        "total_spending": 0,
         "acumulated_discount": 0
     }
 
     new_uuid = uuid.uuid4()
-    user_uuid = str(new_uuid.bytes)
+    user_uuid = str(new_uuid)
 
     data = {}
     with open('data/users.json') as json_file:
@@ -33,36 +36,112 @@ def create_task():
     with open('data/users.json', 'w') as json_file:
             json.dump(data, json_file)
 
-    public_key = ""
-    with open('keys.json') as json_file:
-        data = json.load(json_file)
-        public_key = data['public']
+    
+    public = open("public_key.txt", "rb")
+    public_key = public.read()
+    public_key_str = str(public_key)
 
-    return {"user_uuid": user_uuid, "server_public_key": public_key}, 201
+    return {"user_uuid": user_uuid, "server_public_key": public_key_str}, 201
 
 @app.route('/isalive', methods=['GET'])
 def isalive():
     return {}, 200
 
+@app.route('/items', methods=['GET'])
+def get_items():
+    ret = {}
+    
+    private = open("private_key.txt", "rb")
+    private_key_str = private.read()
+    private_key = RSA.importKey(private_key_str)
+    print(private_key)
 
-def check_keys():
-    write = False
-    with open('keys.json') as json_file:
+    with open('data/items.json') as json_file:
         data = json.load(json_file)
-        if data['public'] == "":
-            write = True
-        
-    if write == True:
-        data = {}
-        with open('keys.json', 'w') as json_file:
-            key = RSA.generate(2048)
-            data['public'] = str(key.publickey().export_key())
-            data['private'] = str(key.export_key())
-            json.dump(data, json_file)
+        for key in data.keys():
+            item = data[key]
+            item_bytes = bytes(str(item), "utf-8")
+            cipher_rsa = PKCS1_OAEP.new(private_key)
+            encrypted_item = cipher_rsa.encrypt(item_bytes)
+            ret[key] = str(encrypted_item)
+
+    return ret, 200
+
+@app.route('/coupons', methods=['GET'])
+def get_coupons():
+    ret = {}
+    
+    private = open("private_key.txt", "rb")
+    private_key_str = private.read()
+    private_key = RSA.importKey(private_key_str)
+    print(private_key)
+
+    with open('data/items.json') as json_file:
+        data = json.load(json_file)
+        for key in data.keys():
+            item = data[key]
+            item_bytes = bytes(str(item), "utf-8")
+            cipher_rsa = PKCS1_OAEP.new(private_key)
+            encrypted_item = cipher_rsa.encrypt(item_bytes)
+            ret[key] = str(encrypted_item)
+
+    return ret, 200
+
+@app.route('/transactions', methods=['GET'])
+def get_transactions():
+    ret = {}
+    
+    private = open("private_key.txt", "rb")
+    private_key_str = private.read()
+    private_key = RSA.importKey(private_key_str)
+    print(private_key)
+
+    with open('data/items.json') as json_file:
+        data = json.load(json_file)
+        for key in data.keys():
+            item = data[key]
+            item_bytes = bytes(str(item), "utf-8")
+            cipher_rsa = PKCS1_OAEP.new(private_key)
+            encrypted_item = cipher_rsa.encrypt(item_bytes)
+            ret[key] = str(encrypted_item)
+
+    return ret, 200
+
+@app.route('/checkout', methods=['POST'])
+def checkout():
+    ret = {}
+    
+    private = open("private_key.txt", "rb")
+    private_key_str = private.read()
+    private_key = RSA.importKey(private_key_str)
+    print(private_key)
+
+    with open('data/items.json') as json_file:
+        data = json.load(json_file)
+        for key in data.keys():
+            item = data[key]
+            item_bytes = bytes(str(item), "utf-8")
+            cipher_rsa = PKCS1_OAEP.new(private_key)
+            encrypted_item = cipher_rsa.encrypt(item_bytes)
+            ret[key] = str(encrypted_item)
+
+    return ret, 200
 
 
+def create_keys():
+    private = open("private_key.txt", "wb")
+    public = open("public_key.txt", "wb")
 
-check_keys()
+    key = RSA.generate(2048)
+    public.write(key.publickey().export_key())
+    public.close()
+
+    private.write(key.export_key())
+    private.close()
+
+
+#only ran once
+#create_keys()
 
 if __name__ == '__main__':
      app.run(host= '0.0.0.0',port='5000')

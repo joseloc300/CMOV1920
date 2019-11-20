@@ -21,8 +21,6 @@ import com.loopj.android.http.RequestParams;
 
 import org.json.JSONObject;
 
-import java.net.*;
-import java.io.*;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.KeyStore;
@@ -151,7 +149,6 @@ public class Register extends AppCompatActivity {
 
     private void callNextActivity() {
         Intent mainScreen = new Intent(this, MainScreen.class);
-        //mainScreen.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(mainScreen);
         this.finish();
     }

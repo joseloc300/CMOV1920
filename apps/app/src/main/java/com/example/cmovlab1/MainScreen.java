@@ -35,15 +35,33 @@ public class MainScreen extends AppCompatActivity {
     }
 
     private void couponsButtonHandler() {
-        switchToCouponsActivity();
+        Button btn_coupons = (Button)findViewById(R.id.btn_coupons);
+        btn_coupons.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switchToCouponsActivity();
+            }
+        });
     }
 
     private void transactionsButtonHandler() {
-        switchToTransactionsActivity();
+        Button btn_transactions = (Button)findViewById(R.id.btn_transactions);
+        btn_transactions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switchToTransactionsActivity();
+            }
+        });
     }
 
     private void checkoutButtonHandler() {
-        switchToCheckoutActivity();
+        Button btn_checkout = (Button)findViewById(R.id.btn_checkout);
+        btn_checkout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switchToCheckoutActivity();
+            }
+        });
     }
 
     private void switchToCartActivity() {

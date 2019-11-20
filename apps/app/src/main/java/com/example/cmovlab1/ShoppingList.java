@@ -7,6 +7,9 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import java.nio.charset.StandardCharsets;
 
@@ -22,10 +25,20 @@ public class ShoppingList extends AppCompatActivity {
     }
 
     private void bindHandlers() {
-
+        scanNewItemHandler();
     }
 
-    public void scan(boolean qrcode) {
+    private void scanNewItemHandler() {
+        Button btn_scan = (Button) findViewById(R.id.btn_scan);
+        btn_scan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                scan();
+            }
+        });
+    }
+
+    public void scan() {
         try {
             Intent intent = new Intent(ACTION_SCAN);
             intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
@@ -56,6 +69,8 @@ public class ShoppingList extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 String contents = data.getStringExtra("SCAN_RESULT");
                 String format = data.getStringExtra("SCAN_RESULT_FORMAT");
+
+                Log.d("scan", contents);
 
 
             }
