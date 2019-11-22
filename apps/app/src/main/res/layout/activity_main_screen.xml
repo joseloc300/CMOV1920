@@ -57,7 +57,7 @@
                     android:id="@+id/btn_coupons"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Coupons" />
+                    android:text="Vouchers" />
             </LinearLayout>
         </TableRow>
 
@@ -81,8 +81,7 @@
                     android:id="@+id/btn_transactions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Button"
-                    tools:text="Transactions" />
+                    android:text="Transactions" />
             </LinearLayout>
 
             <LinearLayout

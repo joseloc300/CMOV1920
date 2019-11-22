@@ -61,6 +61,7 @@ def get_items():
         data = json.load(json_file)
         for key in data.keys():
             item = data[key]
+            item['id'] = key
             item_str = json.dumps(item)
             item_bytes = bytes(item_str, "utf-8")
             ret[key] = str(base64.b64encode(item_bytes))

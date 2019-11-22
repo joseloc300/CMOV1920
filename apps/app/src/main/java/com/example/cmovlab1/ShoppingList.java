@@ -4,28 +4,58 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import org.json.JSONObject;
 
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 
 public class ShoppingList extends AppCompatActivity {
 
     static final String ACTION_SCAN = "com.google.zxing.client.android.SCAN";
+    static ArrayList<Item> items = new ArrayList<>();
+    ItemListAdapter adapter;
+    Item currItem = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_list);
         bindHandlers();
+        setupList();
     }
 
     private void bindHandlers() {
         scanNewItemHandler();
+        addToListHandler();
+    }
+
+    private void setupList() {
+        adapter = new ItemListAdapter(this, android.R.layout.simple_list_item_1, items);
+        ListView list_items = findViewById(R.id.lv_items);
+        list_items.setAdapter(adapter);
+    }
+
+    private void addToListHandler() {
+        Button btn_addcart = (Button) findViewById(R.id.btn_addcart);
+        btn_addcart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(currItem != null && items.size() < 10)
+                    adapter.add(currItem);
+            }
+        });
     }
 
     private void scanNewItemHandler() {
@@ -68,8 +98,21 @@ public class ShoppingList extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 String contents = data.getStringExtra("SCAN_RESULT");
 
-                Log.d("scan", contents);
+                try {
+                    JSONObject itemJson = new JSONObject(contents);
+                    String id = itemJson.getString("id");
+                    String name = itemJson.getString("name");
+                    int cents = Integer.parseInt(itemJson.getString("cents"));
 
+                    currItem = new Item(id, name, cents);
+
+                    ((TextView) findViewById(R.id.tv_prodname)).setText(currItem.getName());
+                    ((TextView) findViewById(R.id.tv_item_price)).setText(currItem.getEuros() + "." + currItem.getCents() + " €");
+
+                }
+                catch (Exception e) {
+
+                }
 
             }
         }

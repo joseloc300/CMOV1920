@@ -19,17 +19,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0px"
-            android:layout_weight="8">
+            android:layout_height="0dp"
+            android:layout_weight="8"
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/list_vert_layout"
+            <ListView
+                android:id="@+id/lv_items"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" />
-        </ScrollView>
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -77,11 +78,11 @@
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/tv_item_price"
                     android:layout_width="0px"
                     android:layout_height="wrap_content"
                     android:layout_weight="5"
-                    android:text="TextView"
+                    android:text="0.00€"
                     android:textSize="18sp" />
             </LinearLayout>
 

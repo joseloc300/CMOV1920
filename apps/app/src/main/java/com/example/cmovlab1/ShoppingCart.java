@@ -1,3 +1,5 @@
+package com.example.cmovlab1;
+
 import java.util.ArrayList;
 
 public class ShoppingCart {
