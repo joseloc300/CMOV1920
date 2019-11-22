@@ -111,19 +111,13 @@ def get_transactions():
 def checkout():
     ret = {}
     
-    private = open("private_key.txt", "rb")
-    private_key_str = private.read()
-    private_key = RSA.importKey(private_key_str)
-    print(private_key)
+    user = request.form['user']
+    items = request.form['items']
+    voucher = request.form['voucher']
+    useDiscount = request.form['useDiscount']
 
-    with open('data/items.json') as json_file:
-        data = json.load(json_file)
-        for key in data.keys():
-            item = data[key]
-            item_bytes = bytes(str(item), "utf-8")
-            cipher_rsa = PKCS1_OAEP.new(private_key)
-            encrypted_item = cipher_rsa.encrypt(item_bytes)
-            ret[key] = str(encrypted_item)
+    ret['spent'] = 0
+    ret['status'] = "Sucess"
 
     return ret, 200
 
