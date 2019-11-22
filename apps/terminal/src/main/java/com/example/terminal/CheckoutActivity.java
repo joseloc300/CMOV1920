@@ -38,8 +38,8 @@ public class CheckoutActivity extends AppCompatActivity {
     }
 
     private void checkoutButtonHandler() {
-        Button btn_shoppingCart = (Button)findViewById(R.id.btn_itemlist);
-        btn_shoppingCart.setOnClickListener(new View.OnClickListener() {
+        Button btn_scan = (Button)findViewById(R.id.btn_scan);
+        btn_scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 scan();

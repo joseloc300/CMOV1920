@@ -38,7 +38,7 @@ import cz.msebera.android.httpclient.Header;
 public class ItemListActivity extends AppCompatActivity {
 
     private ArrayList<Item> items = new ArrayList<>();
-    private final int DIMENSION = 500;
+    private final int DIMENSION = 800;
     private final static String CH_SET="ISO-8859-1";
 
     @Override
