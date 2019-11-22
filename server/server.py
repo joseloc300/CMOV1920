@@ -7,6 +7,7 @@ import json
 from Crypto.PublicKey import RSA
 from Crypto.Random import get_random_bytes
 from Crypto.Cipher import AES, PKCS1_OAEP
+import base64
 
 app = Flask(__name__)        
 
@@ -60,10 +61,9 @@ def get_items():
         data = json.load(json_file)
         for key in data.keys():
             item = data[key]
-            item_bytes = bytes(str(item), "utf-8")
-            cipher_rsa = PKCS1_OAEP.new(private_key)
-            encrypted_item = cipher_rsa.encrypt(item_bytes)
-            ret[key] = str(encrypted_item)
+            item_str = json.dumps(item)
+            item_bytes = bytes(item_str, "utf-8")
+            ret[key] = str(base64.b64encode(item_bytes))
 
     return ret, 200
 

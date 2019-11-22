@@ -16,26 +16,13 @@ public class ShoppingCart {
         return ret;
     }
 
-    public int addItem(Item i) {
-        int index = itemExists(i.getId());
-        int totalCount = 0;
-
-        if (index != -1) {
-            cart.get(index).addCount(i.getCount());
-            totalCount = cart.get(index).getCount();
-        }
-        else {
-            cart.add(i);
-            totalCount = i.getCount();
-        }
-
-        return totalCount;
+    public Boolean addItem(Item i) {
+        cart.add(i);
+        return true;
     }
 
-    public Boolean removeItem(String id) {
-        int index = itemExists(id);
-
-        if (index != -1) {
+    public Boolean removeItem(int index) {
+        if (index >= 0 && index < cart.size()) {
             cart.remove(index);
             return true;
         }
@@ -43,15 +30,4 @@ public class ShoppingCart {
             return false;
     }
 
-    public Boolean editItemCount(String id, int count) {
-        int index = itemExists(id);
-        Boolean ret = false;
-
-        if (index != -1) {
-            cart.get(index).setCount(count);
-            ret = true;
-        }
-
-        return ret;
-    }
 }

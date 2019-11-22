@@ -6,6 +6,7 @@ import android.app.DownloadManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -87,9 +88,12 @@ public class Register extends AppCompatActivity {
                     return;
                 }
 
+                String publicKey = Base64.encodeToString(kp.getPublic().getEncoded(), Base64.DEFAULT);
+                String privateKey = Base64.encodeToString(kp.getPrivate().getEncoded(), Base64.DEFAULT);
+
                 SharedPreferences.Editor editor = getSharedPreferences("keys", MODE_PRIVATE).edit();
-                editor.putString("user_private_key", kp.getPrivate().toString());
-                editor.putString("user_public_key", kp.getPublic().toString());
+                editor.putString("user_private_key", privateKey);
+                editor.putString("user_public_key", publicKey);
                 editor.putString("user_hashed_pw", hashed_pw);
                 editor.putString("username", username);
                 Boolean success = editor.commit();
@@ -97,7 +101,7 @@ public class Register extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"Error storing the client's keys",Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    registeruser(username, fullname, card_number, card_expiration, card_cv2, kp.getPublic().toString());
+                    registeruser(username, fullname, card_number, card_expiration, card_cv2, publicKey);
                 }
             }
         });
