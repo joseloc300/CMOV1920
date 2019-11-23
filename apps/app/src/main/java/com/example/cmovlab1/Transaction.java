@@ -1,7 +1,5 @@
 package com.example.cmovlab1;
 
-import java.util.ArrayList;
-
 public class Transaction {
 
     private int totalEuro;
