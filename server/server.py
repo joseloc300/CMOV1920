@@ -1,12 +1,9 @@
 from flask import Flask, request
 from flask_restful import Resource, Api
-from sqlalchemy import create_engine
 from flask import jsonify, abort
 import uuid
 import json
 from Crypto.PublicKey import RSA
-from Crypto.Random import get_random_bytes
-from Crypto.Cipher import AES, PKCS1_OAEP
 import base64
 
 app = Flask(__name__)        
@@ -50,11 +47,6 @@ def isalive():
 @app.route('/items', methods=['GET'])
 def get_items():
     ret = {}
-    
-    private = open("private_key.txt", "rb")
-    private_key_str = private.read()
-    private_key = RSA.importKey(private_key_str)
-    print(private_key)
 
     with open('data/items.json') as json_file:
         data = json.load(json_file)
