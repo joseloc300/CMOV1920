@@ -158,7 +158,7 @@ public class CheckoutActivity extends AppCompatActivity {
                     JSONObject checkoutInfo = new JSONObject();
                     SharedPreferences keys = getSharedPreferences("keys", MODE_PRIVATE);
                     checkoutInfo.put("user_uuid", keys.getString("user_uuid", ""));
-                    checkoutInfo.put("useDiscount", useStoredDiscount ? "Y" : "N");
+                    checkoutInfo.put("useDiscount", useStoredDiscount ? "Yes" : "No");
                     checkoutInfo.put("voucher", voucher_to_use == null ? "null" : voucher_to_use);
                     checkoutInfo.put("items", ShoppingList.itemListToJSON().toString());
 

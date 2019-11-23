@@ -102,16 +102,28 @@ def get_transactions():
     ret = {}
     ret['transactions'] = []
     user_uuid = request.form['user_uuid']
-    counter = 0
+    
     with open('data/transactions.json') as json_file:
         data = json.load(json_file)
         for key in data.keys():
+            if key == "next_id":
+                continue
             transaction = data[key]
             if transaction['owner'] == user_uuid:
-                ret['transactions'].append(transaction)
-                counter += 1
-        
-        ret['total'] = counter
+                new_transaction = {}
+                new_transaction['total'] = transaction['total']
+                new_transaction['used_voucher'] = transaction['used_voucher']
+                new_transaction['used_discount'] = transaction['used_discount']
+                new_transaction['items'] = ""
+                
+                itemsJSON = json.loads(transaction['items'])
+                for item in itemsJSON.keys():
+                    itemJson = json.loads(itemsJSON[item])
+                    with open('data/items.json') as json_items_file:
+                        data_items = json.load(json_items_file)
+                    new_transaction['items'] += "\n" + data_items[itemJson['id']]['name']
+
+                ret['transactions'].append(new_transaction)
 
     return ret, 200
 
@@ -134,17 +146,19 @@ def checkout():
         total_spent += int(itemJson['price'])
     
     data = {}
+
+    total_spent_before_discount = total_spent
     
     with open('data/users.json') as json_file:
         data = json.load(json_file)
-        if useDiscount == "Y":
+        if useDiscount == "Yes":
             total_spent -= data[user_uuid]['acumulated_discount']
             data[user_uuid]['acumulated_discount'] = 0
             if total_spent < 0:
                 total_spent = 0
         
         if voucher != "null":
-            data[user_uuid]['acumulated_discount'] += int(total_spent * 0.15)
+            data[user_uuid]['acumulated_discount'] += int(total_spent_before_discount * 0.15)
             data[user_uuid]['vouchers'].remove(voucher)
 
         old_total_spent = data[user_uuid]['total_spending']
@@ -164,6 +178,7 @@ def checkout():
     transaction['items'] = items
     transaction['total'] = total_spent
     transaction['used_voucher'] = voucher
+    transaction['used_discount'] = useDiscount
 
     next_id = 0
     with open('data/transactions.json') as json_file:
