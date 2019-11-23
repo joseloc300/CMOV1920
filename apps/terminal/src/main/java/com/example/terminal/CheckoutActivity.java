@@ -80,7 +80,7 @@ public class CheckoutActivity extends AppCompatActivity {
                 try {
                     JSONObject checkoutInfo = new JSONObject(contents);
 
-                    String user = checkoutInfo.getString("user");
+                    String user = checkoutInfo.getString("user_uuid");
                     String items = checkoutInfo.getString("items");
                     String voucher = checkoutInfo.getString("voucher");
                     String useDiscount = checkoutInfo.getString("useDiscount");
@@ -100,7 +100,7 @@ public class CheckoutActivity extends AppCompatActivity {
     private void sendCheckoutRequest(String user, String items, String voucher, String useDiscount) {
         String ip = getSharedPreferences("server", MODE_PRIVATE).getString("server_ip", "");
         RequestParams rq = new RequestParams();
-        rq.add("user", user);
+        rq.add("user_uuid", user);
         rq.add("items", items);
         rq.add("voucher", voucher);
         rq.add("useDiscount", useDiscount);
@@ -112,10 +112,14 @@ public class CheckoutActivity extends AppCompatActivity {
                     tv_status.setText("Status: " + response.getString("status"));
 
                     TextView tv_spent = findViewById(R.id.tv_spent);
-                    tv_spent.setText("Total Spent: " + response.getString("spent"));
+                    int spent = Integer.parseInt(response.getString("spent"));
+                    int euros = spent / 100;
+                    int cents = spent % 100;
+                    tv_spent.setText("Total Spent: " + euros + "." + cents + "€.");
                 }
                 catch (Exception e) {
-
+                    TextView tv_status = findViewById(R.id.tv_status);
+                    tv_status.setText("Status: Failure");
                 }
 
             }

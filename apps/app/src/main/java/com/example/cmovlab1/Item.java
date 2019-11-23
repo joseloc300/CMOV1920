@@ -33,6 +33,6 @@ public class Item {
     }
 
     public int getPrice() {
-        return cents;
+        return price;
     }
 }

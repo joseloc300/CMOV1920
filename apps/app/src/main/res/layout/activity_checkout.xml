@@ -24,7 +24,7 @@
             android:id="@+id/tv_total_price_checkout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:text="Total Price: "
             android:textAlignment="center"
             android:textSize="24sp" />
@@ -49,7 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Use voucher"
-                android:textSize="30sp" />
+                android:textSize="24sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -72,8 +72,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Use all stored discount"
-                android:textSize="30sp" />
+                android:textSize="24sp" />
+
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_qr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            app:srcCompat="@android:drawable/alert_light_frame" />
 
         <Button
             android:id="@+id/btn_confirm_checkout"

@@ -83,8 +83,8 @@ def get_vouchers():
 
     return ret, 200
 
-@app.route('/checkoutInfo', methods=['GET'])
-def get_vouchers():
+@app.route('/checkoutInfo', methods=['POST'])
+def get_checkoutInfo():
     ret = {}
     ret['vouchers'] = []
     user_uuid = request.form['user_uuid']
@@ -93,7 +93,10 @@ def get_vouchers():
         data = json.load(json_file)
         for key in data.keys():
             if key == user_uuid:
-                ret['voucher'] = data[key]['vouchers'][0]
+                if len(data[key]['vouchers']) > 0:
+                    ret['voucher'] = data[key]['vouchers'][0]
+                else:
+                    ret['voucher'] = "null"
                 ret['total'] = len(data[key]['vouchers'])   
                 ret['storedDiscount'] = data[key]['acumulated_discount']
                 break
@@ -121,13 +124,67 @@ def get_transactions():
 @app.route('/checkout', methods=['POST'])
 def checkout():
     ret = {}
+    transaction = {}
     
-    user = request.form['user']
+    user_uuid = request.form['user_uuid']
     items = request.form['items']
     voucher = request.form['voucher']
     useDiscount = request.form['useDiscount']
 
-    ret['spent'] = 0
+    itemsJSON = json.loads(items)
+
+    total_spent = 0
+
+    print(itemsJSON)
+
+    for key in itemsJSON.keys():
+        itemJson = json.loads(itemsJSON[key])
+        total_spent += int(itemJson['price'])
+    
+    data = {}
+    
+    with open('data/users.json') as json_file:
+        data = json.load(json_file)
+        if useDiscount == "Y":
+            total_spent -= data[user_uuid]['acumulated_discount']
+            data[user_uuid]['acumulated_discount'] = 0
+            if total_spent < 0:
+                total_spent = 0
+        
+        if voucher != "null":
+            data[user_uuid]['acumulated_discount'] += int(total_spent * 0.15)
+            data[user_uuid]['vouchers'].remove(voucher)
+
+        old_total_spent = data[user_uuid]['total_spending']
+        data[user_uuid]['total_spending'] += total_spent
+        new_total_spent = data[user_uuid]['total_spending']
+        old = old_total_spent / 100 / 100
+        new = new_total_spent / 100 / 100
+        diff = int(new - old)
+        for i in range(0, diff):
+            new_voucher = str(uuid.uuid4())
+            data[user_uuid]['vouchers'].append(new_voucher)
+            
+    with open('data/users.json', 'w') as json_file:
+        json.dump(data, json_file)
+
+    transaction['owner'] = user_uuid
+    transaction['items'] = items
+    transaction['total'] = total_spent
+    transaction['used_voucher'] = voucher
+
+    next_id = 0
+    with open('data/transactions.json') as json_file:
+        data = json.load(json_file)
+        next_id = data['next_id']
+    
+    data['next_id'] = next_id + 1
+    data["transaction" + str(next_id)] = transaction
+
+    with open('data/transactions.json', 'w') as json_file:
+        json.dump(data, json_file)
+
+    ret['spent'] = total_spent
     ret['status'] = "Sucess"
 
     return ret, 200
