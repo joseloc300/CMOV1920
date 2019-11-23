@@ -70,17 +70,17 @@ public class MainScreen extends AppCompatActivity {
     }
 
     private void switchToTransactionsActivity() {
-        Intent cart = new Intent(this, ShoppingList.class);
-        startActivity(cart);
+        Intent transactions = new Intent(this, TransactionsActivity.class);
+        startActivity(transactions);
     }
 
     private void switchToCouponsActivity() {
-        Intent cart = new Intent(this, ShoppingList.class);
-        startActivity(cart);
+        Intent vouchers = new Intent(this, VoucherActivity.class);
+        startActivity(vouchers);
     }
 
     private void switchToCheckoutActivity() {
-        Intent cart = new Intent(this, ShoppingList.class);
-        startActivity(cart);
+        Intent checkout = new Intent(this, CheckoutActivity.class);
+        startActivity(checkout);
     }
 }

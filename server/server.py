@@ -20,8 +20,7 @@ def register_user():
         "card_number": request.form['card_number'],
         "card_expiration": request.form['card_expiration'],
         "card_cv2": request.form['card_cv2'],
-        "transaction_ids": [],
-        "voucher_ids": [],
+        "vouchers": [],
         "total_spending": 0,
         "acumulated_discount": 0
     }
@@ -68,43 +67,54 @@ def get_items():
 
     return ret, 200
 
-@app.route('/coupons', methods=['GET'])
-def get_coupons():
+@app.route('/vouchers', methods=['GET'])
+def get_vouchers():
     ret = {}
-    
-    private = open("private_key.txt", "rb")
-    private_key_str = private.read()
-    private_key = RSA.importKey(private_key_str)
-    print(private_key)
-
-    with open('data/items.json') as json_file:
+    ret['vouchers'] = []
+    user_uuid = request.form['user_uuid']
+    counter = 0
+    with open('data/users.json') as json_file:
         data = json.load(json_file)
         for key in data.keys():
-            item = data[key]
-            item_bytes = bytes(str(item), "utf-8")
-            cipher_rsa = PKCS1_OAEP.new(private_key)
-            encrypted_item = cipher_rsa.encrypt(item_bytes)
-            ret[key] = str(encrypted_item)
+            if key == user_uuid:
+                ret['vouchers'] = data[key]['vouchers']
+                ret['total'] = len(data[key]['vouchers'])   
+                break
+
+    return ret, 200
+
+@app.route('/checkoutInfo', methods=['GET'])
+def get_vouchers():
+    ret = {}
+    ret['vouchers'] = []
+    user_uuid = request.form['user_uuid']
+    counter = 0
+    with open('data/users.json') as json_file:
+        data = json.load(json_file)
+        for key in data.keys():
+            if key == user_uuid:
+                ret['voucher'] = data[key]['vouchers'][0]
+                ret['total'] = len(data[key]['vouchers'])   
+                ret['storedDiscount'] = data[key]['acumulated_discount']
+                break
 
     return ret, 200
 
 @app.route('/transactions', methods=['GET'])
-def get_transactions():
+def get_transactions():    
     ret = {}
-    
-    private = open("private_key.txt", "rb")
-    private_key_str = private.read()
-    private_key = RSA.importKey(private_key_str)
-    print(private_key)
-
-    with open('data/items.json') as json_file:
+    ret['transactions'] = []
+    user_uuid = request.form['user_uuid']
+    counter = 0
+    with open('data/transactions.json') as json_file:
         data = json.load(json_file)
         for key in data.keys():
-            item = data[key]
-            item_bytes = bytes(str(item), "utf-8")
-            cipher_rsa = PKCS1_OAEP.new(private_key)
-            encrypted_item = cipher_rsa.encrypt(item_bytes)
-            ret[key] = str(encrypted_item)
+            transaction = data[key]
+            if transaction['owner'] == user_uuid:
+                ret['transactions'].append(transaction)
+                counter += 1
+        
+        ret['total'] = counter
 
     return ret, 200
 

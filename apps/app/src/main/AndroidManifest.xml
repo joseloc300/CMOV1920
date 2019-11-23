@@ -11,17 +11,30 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ConnectToServer" android:screenOrientation="portrait">
+        <activity android:name=".TransactionsActivity"></activity>
+        <activity android:name=".VoucherActivity" />
+        <activity android:name=".CheckoutActivity" />
+        <activity
+            android:name=".ConnectToServer"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Register" android:screenOrientation="portrait" />
-        <activity android:name=".ShoppingList" android:screenOrientation="portrait"/>
-        <activity android:name=".MainScreen" android:screenOrientation="portrait"/>
-        <activity android:name=".Login" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Register"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ShoppingList"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainScreen"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Login"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

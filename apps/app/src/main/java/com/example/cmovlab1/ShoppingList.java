@@ -31,9 +31,27 @@ public class ShoppingList extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("Shopping List");
         setContentView(R.layout.activity_shopping_list);
         bindHandlers();
         setupList();
+    }
+
+    public static JSONObject itemListToJSON() {
+        JSONObject o = new JSONObject();
+        for(int i = 0; i < items.size(); i++) {
+            try {
+                JSONObject itemTemp = new JSONObject();
+                itemTemp.put("id", items.get(i).getId());
+                itemTemp.put("price", Integer.toString(items.get(i).getPrice()));
+                o.put("item" + i, itemTemp.toString());
+            }
+            catch (Exception e) {
+
+            }
+        }
+
+        return o;
     }
 
     private void bindHandlers() {
