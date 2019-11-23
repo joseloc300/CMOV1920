@@ -67,19 +67,16 @@ def get_items():
 
     return ret, 200
 
-@app.route('/vouchers', methods=['GET'])
+@app.route('/vouchers', methods=['POST'])
 def get_vouchers():
     ret = {}
     ret['vouchers'] = []
     user_uuid = request.form['user_uuid']
-    counter = 0
+    print("a")
     with open('data/users.json') as json_file:
         data = json.load(json_file)
-        for key in data.keys():
-            if key == user_uuid:
-                ret['vouchers'] = data[key]['vouchers']
-                ret['total'] = len(data[key]['vouchers'])   
-                break
+        ret['vouchers'] = data[user_uuid]['vouchers']
+        ret['total'] = len(data[user_uuid]['vouchers'])
 
     return ret, 200
 
@@ -91,19 +88,16 @@ def get_checkoutInfo():
     counter = 0
     with open('data/users.json') as json_file:
         data = json.load(json_file)
-        for key in data.keys():
-            if key == user_uuid:
-                if len(data[key]['vouchers']) > 0:
-                    ret['voucher'] = data[key]['vouchers'][0]
-                else:
-                    ret['voucher'] = "null"
-                ret['total'] = len(data[key]['vouchers'])   
-                ret['storedDiscount'] = data[key]['acumulated_discount']
-                break
+        if len(data[user_uuid]['vouchers']) > 0:
+            ret['voucher'] = data[user_uuid]['vouchers'][0]
+        else:
+            ret['voucher'] = "null"
+        ret['total'] = len(data[user_uuid]['vouchers'])   
+        ret['storedDiscount'] = data[user_uuid]['acumulated_discount']
 
     return ret, 200
 
-@app.route('/transactions', methods=['GET'])
+@app.route('/transactions', methods=['POST'])
 def get_transactions():    
     ret = {}
     ret['transactions'] = []
@@ -135,8 +129,6 @@ def checkout():
 
     total_spent = 0
 
-    print(itemsJSON)
-
     for key in itemsJSON.keys():
         itemJson = json.loads(itemsJSON[key])
         total_spent += int(itemJson['price'])
@@ -158,8 +150,8 @@ def checkout():
         old_total_spent = data[user_uuid]['total_spending']
         data[user_uuid]['total_spending'] += total_spent
         new_total_spent = data[user_uuid]['total_spending']
-        old = old_total_spent / 100 / 100
-        new = new_total_spent / 100 / 100
+        old = int(old_total_spent / 100 / 100)
+        new = int(new_total_spent / 100 / 100)
         diff = int(new - old)
         for i in range(0, diff):
             new_voucher = str(uuid.uuid4())

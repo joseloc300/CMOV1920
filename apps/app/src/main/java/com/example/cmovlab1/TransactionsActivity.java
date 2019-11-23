@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class TransactionsActivity extends AppCompatActivity {
 
-    public static ArrayList<Item> items = new ArrayList<>();
+    public static ArrayList<Transaction> items = new ArrayList<>();
     ItemListAdapter adapter;
 
     @Override

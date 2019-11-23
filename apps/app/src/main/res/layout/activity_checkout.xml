@@ -23,16 +23,16 @@
         <TextView
             android:id="@+id/tv_total_price_checkout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_height="0dp"
+            android:layout_weight="2"
             android:text="Total Price: "
             android:textAlignment="center"
             android:textSize="24sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:layout_height="0dp"
+            android:layout_weight="4"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -54,8 +54,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:layout_height="0dp"
+            android:layout_weight="4"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -79,8 +79,8 @@
         <ImageView
             android:id="@+id/iv_qr"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="6"
+            android:layout_height="0dp"
+            android:layout_weight="10"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
             app:srcCompat="@android:drawable/alert_light_frame" />
@@ -88,8 +88,8 @@
         <Button
             android:id="@+id/btn_confirm_checkout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:layout_height="0dp"
+            android:layout_weight="4"
             android:text="Checkout" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
